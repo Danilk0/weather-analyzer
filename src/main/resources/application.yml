@@ -1,0 +1,10 @@
+scheduler:
+  interval-in-crone: '* * * * * ?'
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    password: compose-postgres
+    url: jdbc:postgresql://db:5432/compose-postgres
+    username: compose-postgres
+server:
+  port: 9080
