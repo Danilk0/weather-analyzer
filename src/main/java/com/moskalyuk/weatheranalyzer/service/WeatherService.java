@@ -10,6 +10,7 @@ import com.moskalyuk.weatheranalyzer.mapper.WeatherReadMapper;
 import com.moskalyuk.weatheranalyzer.mapper.WeatherResponseMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.RequestEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,9 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class WeatherService {
 
+    @Value("${X-RapidAPI-Key}")
+    private final String key;
+
     private final WeatherRepository weatherRepository;
 
     private final RestTemplate restTemplate;
@@ -40,8 +44,14 @@ public class WeatherService {
     @Transactional
     public void updateWeather(){
         log.info("Scheduled start");
+
+        if(Objects.equals(key, "")){
+            log.warn("Input X-RapidAPI-Key");
+            return;
+        }
+
         RequestEntity requestEntity= RequestEntity.get(URI.create("https://weatherapi-com.p.rapidapi.com/current.json?q=Minsk"))
-                .header("X-RapidAPI-Key", "e7577f57ddmsh5c909b395446b4ap166f3bjsn45bee5386c7f")
+                .header("X-RapidAPI-Key", key)
                 .header("X-RapidAPI-Host", "weatherapi-com.p.rapidapi.com")
                 .build();
         try {

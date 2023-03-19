@@ -1,10 +1,13 @@
+X-RapidAPI-Key:
 scheduler:
   interval-in-crone: '* * * * * ?'
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    password: compose-postgres
-    url: jdbc:postgresql://db:5432/compose-postgres
-    username: compose-postgres
+    password: root
+    url: jdbc:postgresql://localhost:5432/weather_analyzer
+    username: root
+  jpa:
+    show-sql: true
 server:
   port: 9080
